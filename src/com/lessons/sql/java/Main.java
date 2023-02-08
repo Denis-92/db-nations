@@ -20,12 +20,12 @@ public class Main {
 		try (Connection con = DriverManager.getConnection(url, user, password)) {
 			
 			String sql = 
-					"SELECT countries.name, countries.country_id, regions.name, continents.name\r\n"
+					"SELECT countries.name AS Nome_stato, countries.country_id AS ID_stato, regions.name AS Nome_regione, continents.name AS Nome_continente\r\n"
 					+ "FROM countries\r\n"
 					+ "INNER JOIN regions ON countries.region_id = regions.region_id\r\n"
 					+ "INNER JOIN continents ON regions.continent_id = continents.continent_id\r\n"
-					+ "GROUP BY countries.country_id, regions.name, continents.name\r\n"
-					+ "ORDER BY countries.name;";
+					+ "GROUP BY ID_stato, Nome_regione, Nome_continente\r\n"
+					+ "ORDER BY Nome_stato;";
 			
 			try(PreparedStatement ps = con.prepareStatement(sql)) {
 			
@@ -33,10 +33,10 @@ public class Main {
 					System.out.println("NOME STATO \t\t ID STATO \t\t NOME REGIONE \t\t NOME CONTINENTE");
 					while (rs.next()) {
 						System.out.println(
-								rs.getString("countries.name") + "\t\t" +
-								rs.getInt("countries.country_id") + "\t\t\t" +
-								rs.getString("regions.name") + "\t\t" +
-								rs.getString("continents.name")
+								rs.getString("Nome_stato") + "\t\t" +
+								rs.getInt("ID_stato") + "\t\t\t" +
+								rs.getString("Nome_regione") + "\t\t" +
+								rs.getString("Nome_continente")
 						);
 					}
 				}	
